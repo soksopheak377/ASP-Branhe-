@@ -123,7 +123,7 @@
 
     <form id="Form1" runat="server">
         <ext:ResourceManager ID="ResourceManager2" runat="server" />
-         <ext:TabPanel runat="server" Height="300" Width="1700">
+         <ext:TabPanel runat="server" Height="300" Width="1700" Top="80">
             <Items>
                 <ext:Panel runat="server" Title="Home" Icon="House">
                     <TopBar>
@@ -191,11 +191,11 @@
                     </TopBar>
                 </ext:Panel>
                 
-                <ext:Panel runat="server" Title="Products" class="icon-customer">
+                <ext:Panel runat="server" Title="Products" class="icon-customer" Icon="Book">
                     <TopBar>
                         <ext:Toolbar runat="server">
                             <Items>
-                                <ext:ButtonGroup runat="server" Title="All Products" Columns="3">
+                                <ext:ButtonGroup runat="server" Title="All Products"  Columns="3">
                                     <Items>
                                         <ext:Button 
                                             runat="server" 
