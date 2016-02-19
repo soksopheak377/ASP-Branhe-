@@ -1,14 +1,40 @@
 ﻿<%@ Page Language="C#" Inherits="System.Web.Mvc.ViewPage<dynamic>" %>
 
-<!DOCTYPE html>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
 
 <html>
 <head id="Head1" runat="server">
     <meta name="viewport" content="width=device-width" />
-    <title>Index</title>
+    <title>Rastaurant | Home</title>
+    <link href="../../Style/css/bootstrap-theme.css" rel="stylesheet" type="text/css" />
+    <link href="../../Style/css/bootstrap-theme.min.css" rel="stylesheet" type="text/css" />
+    <link href="../../Style/css/bootstrap.css" rel="stylesheet" type="text/css" />
+    <link href="../../Style/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <link href="../../Style/css/style.css" rel="stylesheet" type="text/css" />
+    <style>
+        .add32 {
+            background-image : url(images/add32.gif) !important;
+        }
+        
+        .add16 {
+            background-image : url(images/add16.gif) !important;
+        }
+        
+        .add24 {
+            background-image : url(images/add24.gif) !important;
+        }
+       .icon-customer
+        {
+            background-image="../../Images/Amazon-Kindle-icon.png"
+        }
+    </style>
+    <script src="../../Scripts/bootstrap.js" type="text/javascript"></script>
+    <script src="../../Scripts/bootstrap.min.js" type="text/javascript"></script>
 </head>
 <body>
-    <ext:ResourceManager ID="ResourceManager1" runat="server"/>
+    <%--<ext:ResourceManager ID="ResourceManager1" runat="server"/>
     <ext:Viewport ID="Viewport1" runat="server" Layout="FitLayout">
         <Items>
             <ext:GridPanel ID="GridPanel1" runat="server" ForceFit="true" Border="false">
@@ -92,5 +118,243 @@
             </ext:Button>
         </Buttons>
     </ext:Window>
+--%>
+
+
+    <form id="Form1" runat="server">
+        <ext:ResourceManager ID="ResourceManager2" runat="server" />
+         <ext:TabPanel runat="server" Height="300" Width="1700">
+            <Items>
+                <ext:Panel runat="server" Title="Home" Icon="House">
+                    <TopBar>
+                        <ext:Toolbar runat="server">
+                            <Items>
+                                <ext:ButtonGroup runat="server" Title="Menu Selection" Columns="3">
+                                    <Items>
+                                        <ext:Button 
+                                            runat="server" 
+                                            Text="Table" 
+                                            IconCls="add32" 
+                                            Scale="Large" 
+                                            IconAlign="Top"
+                                            Icon="Table"
+                                            Cls="x-btn-as-arrow"
+                                            ArrowAlign="Bottom" 
+                                            Height="100"
+                                           
+                                            Width="100"
+                                            RowSpan="3"
+                                            />
+                                        <ext:SplitButton 
+                                            runat="server" 
+                                            Text="Menu" 
+                                            IconCls="add32" 
+                                            IconAlign="Top"
+                                            ArrowAlign="Bottom" 
+                                            Scale="Large"
+                                            Height="100"
+                                            Width="100"
+                                            RowSpan="3">
+                                            <Menu>
+                                                <ext:Menu runat="server">
+                                                    <Items>
+                                                        <ext:MenuItem ID="MenuItem1" runat="server" Text="Menu Button 1" />
+                                                    </Items>
+                                                    <Items>
+                                                        <ext:MenuItem ID="MenuItem2" runat="server" Text="Menu Button 1" />
+                                                    </Items>
+                                                    <Items>
+                                                        <ext:MenuItem ID="MenuItem3" runat="server" Text="Menu Button 1" />
+                                                    </Items>
+                                                    <Items>
+                                                        <ext:MenuItem ID="MenuItem4" runat="server" Text="Menu Button 1" />
+                                                    </Items>
+                                                    <Items>
+                                                        <ext:MenuItem ID="MenuItem5" runat="server" Text="Menu Button 1" />
+                                                    </Items>
+                                                    <Items>
+                                                        <ext:MenuItem ID="MenuItem6" runat="server" Text="Menu Button 1" />
+                                                    </Items>
+                                                    <Items>
+                                                        <ext:MenuItem ID="MenuItem7" runat="server" Text="Menu Button 1" />
+                                                    </Items>
+                                                    <Items>
+                                                        <ext:MenuItem ID="MenuItem8" runat="server" Text="Menu Button 1" />
+                                                    </Items>
+                                                </ext:Menu>
+                                            </Menu>
+                                        </ext:SplitButton>
+                                    </Items>
+                                </ext:ButtonGroup>
+                            </Items>
+                        </ext:Toolbar>
+                    </TopBar>
+                </ext:Panel>
+                
+                <ext:Panel runat="server" Title="Products" class="icon-customer">
+                    <TopBar>
+                        <ext:Toolbar runat="server">
+                            <Items>
+                                <ext:ButtonGroup runat="server" Title="All Products" Columns="3">
+                                    <Items>
+                                        <ext:Button 
+                                            runat="server" 
+                                            Text="Paste" 
+                                            IconCls="add32" 
+                                            Scale="Large" 
+                                            IconAlign="Top"
+                                            Cls="x-btn-as-arrow"
+                                            RowSpan="3"
+                                            />
+                                        <ext:SplitButton 
+                                            runat="server" 
+                                            Text="Menu Button" 
+                                            IconCls="add32" 
+                                            IconAlign="Top"
+                                            ArrowAlign="Bottom" 
+                                            Scale="Large"
+                                            RowSpan="3">
+                                            <Menu>
+                                                <ext:Menu runat="server">
+                                                    <Items>
+                                                        <ext:MenuItem runat="server" Text="Menu Button 1" />
+                                                    </Items>
+                                                </ext:Menu>
+                                            </Menu>
+                                        </ext:SplitButton>
+                                        <ext:SplitButton runat="server" Text="Cut" IconCls="add16">
+                                            <Menu>
+                                                <ext:Menu runat="server">
+                                                    <Items>
+                                                        <ext:MenuItem runat="server" Text="Cut Menu Item" />
+                                                    </Items>
+                                                </ext:Menu>
+                                            </Menu>
+                                        </ext:SplitButton>
+                                    </Items>
+                                </ext:ButtonGroup>
+                                
+                                <ext:ButtonGroup runat="server" Title="Customer" Columns="3">
+                                    <Items>
+                                        <ext:Button 
+                                            runat="server" 
+                                            Text="Paste" 
+                                            IconCls="add32" 
+                                            Scale="Large" 
+                                            IconAlign="Top"
+                                            Cls="x-btn-as-arrow" 
+                                            RowSpan="3"
+                                            />
+                                        <ext:SplitButton 
+                                            runat="server" 
+                                            Text="Menu Button" 
+                                            IconCls="add32" 
+                                            IconAlign="Top"
+                                            ArrowAlign="Bottom" 
+                                            Scale="Large"
+                                            RowSpan="3">
+                                            <Menu>
+                                                <ext:Menu runat="server">
+                                                    <Items>
+                                                        <ext:MenuItem runat="server" Text="Menu Button 1" />
+                                                    </Items>
+                                                </ext:Menu>
+                                            </Menu>
+                                        </ext:SplitButton>
+                                        <ext:SplitButton runat="server" Text="Cut" IconCls="add16">
+                                            <Menu>
+                                                <ext:Menu runat="server">
+                                                    <Items>
+                                                        <ext:MenuItem runat="server" Text="Cut Menu Item" />
+                                                    </Items>
+                                                </ext:Menu>
+                                            </Menu>
+                                        </ext:SplitButton>
+                                    </Items>
+                                </ext:ButtonGroup>
+                            </Items>
+                        </ext:Toolbar>
+                    </TopBar>
+                </ext:Panel>
+                
+                <ext:Panel runat="server" Title="Customers" Icon="User" Width="50">
+                    <TopBar>
+                        <ext:Toolbar runat="server">
+                            <Items>
+                                <ext:ButtonGroup runat="server" Title="Clipboard" Columns="3">
+                                    <Items>
+                                        <ext:Button 
+                                            runat="server" 
+                                            Text="Paste" 
+                                            IconCls="add32" 
+                                            Scale="Large" 
+                                            IconAlign="Top"
+                                            Cls="x-btn-as-arrow" 
+                                            RowSpan="3"
+                                            />
+                                        <ext:SplitButton 
+                                            runat="server" 
+                                            Text="Menu Button" 
+                                            IconCls="add32" 
+                                            IconAlign="Top"
+                                            ArrowAlign="Bottom" 
+                                            Scale="Large"
+                                            RowSpan="3">
+                                            <Menu>
+                                                <ext:Menu runat="server">
+                                                    <Items>
+                                                        <ext:MenuItem runat="server" Text="Menu Button 1" />
+                                                    </Items>
+                                                </ext:Menu>
+                                            </Menu>
+                                        </ext:SplitButton>
+                                        <ext:SplitButton runat="server" Text="Cut" IconCls="add16">
+                                            <Menu>
+                                                <ext:Menu runat="server">
+                                                    <Items>
+                                                        <ext:MenuItem runat="server" Text="Cut Menu Item" />
+                                                    </Items>
+                                                </ext:Menu>
+                                            </Menu>
+                                        </ext:SplitButton>
+                                    </Items>
+                                </ext:ButtonGroup>
+                                
+                                <ext:ButtonGroup runat="server" Title="Other Actions" Columns="3">
+                                    <Items>
+                                        <ext:Button 
+                                            runat="server" 
+                                            Text="Paste" 
+                                            IconCls="add32" 
+                                            Scale="Large" 
+                                            IconAlign="Top"
+                                            RowSpan="3"
+                                            Cls="x-btn-as-arrow" 
+                                            />
+                                        <ext:SplitButton 
+                                            runat="server" 
+                                            Text="Menu Button" 
+                                            IconCls="add32" 
+                                            IconAlign="Top"
+                                            RowSpan="3"
+                                            ArrowAlign="Bottom" 
+                                            Scale="Large">
+                                            <Menu>
+                                                <ext:Menu runat="server">
+                                                    <Items>
+                                                        <ext:MenuItem runat="server" Text="Menu Button 1" />
+                                                    </Items>
+                                                </ext:Menu>
+                                            </Menu>
+                                        </ext:SplitButton>
+                                    </Items>
+                                </ext:ButtonGroup>
+                            </Items>
+                        </ext:Toolbar>
+                    </TopBar>
+                </ext:Panel>
+            </Items>
+        </ext:TabPanel>
+    </form>
 </body>
 </html>

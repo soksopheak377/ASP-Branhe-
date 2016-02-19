@@ -1,0 +1,8 @@
+﻿.x-panel .x-panel-default .x-border-box
+    {
+        margin-top:0px !important;
+    }
+.x-tab-bar 
+    {
+       height:80px;
+   }

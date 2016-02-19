@@ -271,6 +271,14 @@
     <Content Include="Scripts\knockout-2.1.0.debug.js" />
     <Content Include="Scripts\knockout-2.1.0.js" />
     <Content Include="Scripts\modernizr-2.5.3.js" />
+    <Content Include="Style\css\bootstrap-theme.css" />
+    <Content Include="Style\css\bootstrap-theme.min.css" />
+    <Content Include="Style\css\bootstrap.css" />
+    <Content Include="Style\css\bootstrap.min.css" />
+    <Content Include="Style\fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="Scripts\bootstrap.js" />
+    <Content Include="Scripts\bootstrap.min.js" />
+    <Content Include="Scripts\npm.js" />
     <Content Include="Views\Dashboard\Index.aspx" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
@@ -325,6 +333,12 @@
     <None Include="App_Readme\Ext.NET\CHANGELOG.md" />
     <None Include="App_Readme\Ext.NET\LICENSE" />
     <None Include="App_Readme\Ext.NET\README.md" />
+    <None Include="Style\css\bootstrap-theme.css.map" />
+    <None Include="Style\css\bootstrap.css.map" />
+    <None Include="Style\fonts\glyphicons-halflings-regular.eot" />
+    <None Include="Style\fonts\glyphicons-halflings-regular.ttf" />
+    <None Include="Style\fonts\glyphicons-halflings-regular.woff" />
+    <None Include="Style\fonts\glyphicons-halflings-regular.woff2" />
     <None Include="Web.config.install.xdt" />
     <None Include="Web.config.uninstall.xdt" />
   </ItemGroup>
