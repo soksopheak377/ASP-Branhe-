@@ -256,6 +256,11 @@
     <Content Include="Content\themes\base\minified\jquery.ui.theme.min.css" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
+    <Content Include="Images\Amazon-Kindle-icon.png" />
+    <Content Include="Images\Blackvariant-Button-Ui-Requests-15-Amazon-Kindle.ico" />
+    <Content Include="Images\Businesswoman-1-icon.png" />
+    <Content Include="Images\database-icon.png" />
+    <Content Include="Images\sale-icon.png" />
     <Content Include="Scripts\jquery-1.7.1-vsdoc.js" />
     <Content Include="Scripts\jquery-1.7.1.js" />
     <Content Include="Scripts\jquery-1.7.1.min.js" />
@@ -275,6 +280,7 @@
     <Content Include="Style\css\bootstrap-theme.min.css" />
     <Content Include="Style\css\bootstrap.css" />
     <Content Include="Style\css\bootstrap.min.css" />
+    <Content Include="Style\css\style.css" />
     <Content Include="Style\fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />

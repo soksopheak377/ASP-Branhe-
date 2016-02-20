@@ -32,6 +32,58 @@
     </style>
     <script src="../../Scripts/bootstrap.js" type="text/javascript"></script>
     <script src="../../Scripts/bootstrap.min.js" type="text/javascript"></script>
+    <script runat="server">
+    protected void UpdateTimeStamp(object sender, DirectEventArgs e)
+    {
+        X.Msg.Notify("The Server Time is: ", DateTime.Now.ToLongTimeString()).Show();
+    }
+</script>
+
+<script runat="server">
+    protected void Page_Load(object sender, EventArgs e)
+    {
+        this.storedatgride.DataSource = this.Jobs;
+        this.storedatgride.DataBind();
+    }
+    
+    private List<Job> Jobs
+    {
+        get
+        {
+            List<Job> jobs = new List<Job>();
+
+            for (int i = 1; i <= 1000; i++)
+            {
+                jobs.Add(new Job(
+                            i, 
+                            "Task" + i.ToString(), 
+                            DateTime.Today.AddDays(i), 
+                            DateTime.Today.AddDays(i + i), 
+                            (i%3 == 0)));
+            }
+
+            return jobs;
+        }
+    }
+
+    public class Job
+    {
+        public Job(int id, string name, DateTime start, DateTime end, bool completed)
+        {
+            this.ID = id;
+            this.Name = name;
+            this.Start = start;
+            this.End = end;
+            this.Completed = completed;
+        }
+
+        public int ID { get; set; }
+        public string Name { get; set; }
+        public DateTime Start { get; set; }
+        public DateTime End { get; set; }
+        public bool Completed { get; set; }
+    }
+</script>
 </head>
 <body>
     <%--<ext:ResourceManager ID="ResourceManager1" runat="server"/>
@@ -123,7 +175,7 @@
 
     <form id="Form1" runat="server">
         <ext:ResourceManager ID="ResourceManager2" runat="server" />
-         <ext:TabPanel runat="server" Height="300" Width="1700" Top="80">
+         <ext:TabPanel runat="server" Height="900" Width="1580" Top="80">
             <Items>
                 <ext:Panel runat="server" Title="Home" Icon="House">
                     <TopBar>
@@ -131,46 +183,40 @@
                             <Items>
                                 <ext:ButtonGroup runat="server" Title="Menu Selection" Columns="3">
                                     <Items>
-                                        <ext:Button 
-                                            runat="server" 
-                                            Text="Table" 
-                                            IconCls="add32" 
-                                            Scale="Large" 
-                                            IconAlign="Top"
-                                            Icon="Table"
-                                            Cls="x-btn-as-arrow"
-                                            ArrowAlign="Bottom" 
-                                            Height="100"
-                                           
-                                            Width="100"
-                                            RowSpan="3"
-                                            />
+                                        <ext:Button  runat="server" Text="Table" IconCls="add32" IconAlign="Top" Icon="Table"  Cls="x-btn-as-arrow" ArrowAlign="Bottom"  Height="70" Width="100">
+                                             <%--<Listeners>
+                                               <Click Handler="#{grid_load_db}.getForm().reset();#{winLoad_data}.show()" />--%>
+                                            <DirectEvents>
+                                                <Click OnEvent="UpdateTimeStamp">
+                                                    <Confirmation ConfirmRequest="true" Title="Title" Message="Sample Confirmation Message..." />
+                                                </Click>
+                                            </DirectEvents>
+                                            <%--</Listeners>--%>
+                                        </ext:Button>
                                         <ext:SplitButton 
                                             runat="server" 
                                             Text="Menu" 
                                             IconCls="add32" 
+                                            Icon="Book"
                                             IconAlign="Top"
-                                            ArrowAlign="Bottom" 
-                                            Scale="Large"
-                                            Height="100"
-                                            Width="100"
-                                            RowSpan="3">
+                                            Height="70"
+                                            Width="100">
                                             <Menu>
                                                 <ext:Menu runat="server">
                                                     <Items>
-                                                        <ext:MenuItem ID="MenuItem1" runat="server" Text="Menu Button 1" />
+                                                        <ext:MenuItem ID="Foods" runat="server" Text="Foods" />
                                                     </Items>
                                                     <Items>
-                                                        <ext:MenuItem ID="MenuItem2" runat="server" Text="Menu Button 1" />
+                                                        <ext:MenuItem ID="Beers" runat="server" Text="Beers" />
                                                     </Items>
                                                     <Items>
-                                                        <ext:MenuItem ID="MenuItem3" runat="server" Text="Menu Button 1" />
+                                                        <ext:MenuItem ID="Sweets" runat="server" Text="Sweets" />
                                                     </Items>
                                                     <Items>
-                                                        <ext:MenuItem ID="MenuItem4" runat="server" Text="Menu Button 1" />
+                                                        <ext:MenuItem ID="Coffee" runat="server" Text="Coffee" />
                                                     </Items>
                                                     <Items>
-                                                        <ext:MenuItem ID="MenuItem5" runat="server" Text="Menu Button 1" />
+                                                        <ext:MenuItem ID="Rices" runat="server" Text="Rices" />
                                                     </Items>
                                                     <Items>
                                                         <ext:MenuItem ID="MenuItem6" runat="server" Text="Menu Button 1" />
@@ -189,6 +235,112 @@
                             </Items>
                         </ext:Toolbar>
                     </TopBar>
+
+                    <Items>
+                        <ext:Button ID="btn_add" runat="server" Icon="Add">
+                            <DirectEvents>
+                                <Click OnEvent="UpdateTimeStamp">
+                                    <Confirmation ConfirmRequest="true"  Title="Title" Message="Sample Confirmation Message..."/>
+                                </Click>
+                            </DirectEvents>
+                        </ext:Button>
+                    </Items>
+                    <Items>
+                       <%-- <ext:TextField ID="TextField1" 
+                                runat="server" 
+                                FieldLabel="Label" 
+                                iconCls='refreshIconCls'
+                                LabelStyle="color:blue;" 
+                                LabelSeparator="-" />--%>
+                                <ext:ComboBox ID="ComboBox1" 
+                                    runat="server" 
+                                    DisplayField="Common" 
+                                    ValueField="Common"
+                                    TypeAhead="false"
+                                    Width="570"
+                                    PageSize="10"
+                                    Region="East"
+                                    HideBaseTrigger="true"
+                                    MinChars="0"
+                                    TriggerAction="Query">
+                                    <ListConfig  LoadingText="Searching...">
+                                        <ItemTpl ID="ItemTpl1" runat="server">
+                                            <Html>
+                                                <div class="search-item">
+							                        <h3><span>${Price}</span>{Common}</h3>
+							                        {Botanical}
+						                        </div>
+                                            </Html>
+                                        </ItemTpl>
+                                    </ListConfig>
+                          </ext:ComboBox>
+                    </Items>
+                    <Items>
+                        <ext:GridPanel runat="server" ID="loaddata_gridview" Header="false" Border="false" ColumnLines="true">
+                            <Store>
+                                <ext:Store ID="storedatgride" runsat="server" PageSize="15">
+                                    <Model>
+                                        <ext:Model ID="loaddb_gride" runat="server" IDProperty="ID">
+                                            <Fields>
+                                                <ext:ModelField Name="ID" />
+                                                <ext:ModelField Name="Name" />
+                                                <ext:ModelField Name="Start" Type="Date" />
+                                                <ext:ModelField Name="End" Type="Date" />
+                                                <ext:ModelField Name="Completed" Type="Boolean" />
+                                            </Fields>
+                                        </ext:Model>
+                                    </Model>
+                                </ext:Store>    
+                            </Store>
+                          <ColumnModel runat="server">
+                            <Columns>
+                                <ext:Column ID="Column1" runat="server" 
+                                    Text="ID" 
+                                    Width="80" 
+                                    Sortable="true" 
+                                    DataIndex="ID" 
+                                    />
+                                <ext:Column ID="Column2" runat="server" 
+                                    Text="Job Name" 
+                                    Sortable="true" 
+                                    DataIndex="Name"
+                                    Flex="1" 
+                                    />
+                                <ext:DateColumn ID="DateColumn1" runat="server" 
+                                    Text="Start" 
+                                    Width="120" 
+                                    Sortable="true" 
+                                    DataIndex="Start"
+                                    Format="yyyy-MM-dd"
+                                    />
+                                <ext:DateColumn ID="DateColumn2" runat="server" 
+                                    Text="End" 
+                                    Width="120" 
+                                    Sortable="true" 
+                                    DataIndex="End"
+                                    Format="yyyy-MM-dd"
+                                    />
+                                <ext:Column ID="Column3" runat="server" 
+                                    Text="Completed" 
+                                    Width="80" 
+                                    Sortable="true" 
+                                    DataIndex="Completed">
+                                   <%-- <Renderer Handler="return (value) ? 'Yes':'No';" />--%>
+                                </ext:Column>
+                            </Columns>
+                          </ColumnModel>
+                          <View>
+                                <ext:GridView ID="GridView1" runat="server" LoadMask="false" />
+                          </View>
+                          <BottomBar>
+                                <ext:PagingToolbar ID="PagingToolbar1" 
+                                    runat="server" 
+                                    DisplayInfo="true"
+                                    DisplayMsg="Displaying Jobs {0} - {1} of {2}"
+                                    />
+                            </BottomBar>
+                        </ext:GridPanel>
+                    </Items>
                 </ext:Panel>
                 
                 <ext:Panel runat="server" Title="Products" class="icon-customer" Icon="Book">
@@ -197,75 +349,26 @@
                             <Items>
                                 <ext:ButtonGroup runat="server" Title="All Products"  Columns="3">
                                     <Items>
-                                        <ext:Button 
-                                            runat="server" 
-                                            Text="Paste" 
-                                            IconCls="add32" 
-                                            Scale="Large" 
-                                            IconAlign="Top"
-                                            Cls="x-btn-as-arrow"
-                                            RowSpan="3"
-                                            />
+                                        <ext:Button runat="server" Text="Paste" IconCls="add32" IconAlign="Top" Height="100" Width="100" Icon="User" RowSpan="3">
+                                            <DirectEvents>
+                                                <Click OnEvent="UpdateTimeStamp">
+                                                    <Confirmation ConfirmRequest="true" Title="Title" Message="Sample Confirmation Message..." />
+                                                </Click>
+                                            </DirectEvents>
+                                        </ext:Button>
                                         <ext:SplitButton 
                                             runat="server" 
                                             Text="Menu Button" 
                                             IconCls="add32" 
                                             IconAlign="Top"
-                                            ArrowAlign="Bottom" 
-                                            Scale="Large"
+                                            Icon="Book"
+                                            Height="100"
+                                            Width="100"
                                             RowSpan="3">
                                             <Menu>
                                                 <ext:Menu runat="server">
                                                     <Items>
                                                         <ext:MenuItem runat="server" Text="Menu Button 1" />
-                                                    </Items>
-                                                </ext:Menu>
-                                            </Menu>
-                                        </ext:SplitButton>
-                                        <ext:SplitButton runat="server" Text="Cut" IconCls="add16">
-                                            <Menu>
-                                                <ext:Menu runat="server">
-                                                    <Items>
-                                                        <ext:MenuItem runat="server" Text="Cut Menu Item" />
-                                                    </Items>
-                                                </ext:Menu>
-                                            </Menu>
-                                        </ext:SplitButton>
-                                    </Items>
-                                </ext:ButtonGroup>
-                                
-                                <ext:ButtonGroup runat="server" Title="Customer" Columns="3">
-                                    <Items>
-                                        <ext:Button 
-                                            runat="server" 
-                                            Text="Paste" 
-                                            IconCls="add32" 
-                                            Scale="Large" 
-                                            IconAlign="Top"
-                                            Cls="x-btn-as-arrow" 
-                                            RowSpan="3"
-                                            />
-                                        <ext:SplitButton 
-                                            runat="server" 
-                                            Text="Menu Button" 
-                                            IconCls="add32" 
-                                            IconAlign="Top"
-                                            ArrowAlign="Bottom" 
-                                            Scale="Large"
-                                            RowSpan="3">
-                                            <Menu>
-                                                <ext:Menu runat="server">
-                                                    <Items>
-                                                        <ext:MenuItem runat="server" Text="Menu Button 1" />
-                                                    </Items>
-                                                </ext:Menu>
-                                            </Menu>
-                                        </ext:SplitButton>
-                                        <ext:SplitButton runat="server" Text="Cut" IconCls="add16">
-                                            <Menu>
-                                                <ext:Menu runat="server">
-                                                    <Items>
-                                                        <ext:MenuItem runat="server" Text="Cut Menu Item" />
                                                     </Items>
                                                 </ext:Menu>
                                             </Menu>
@@ -277,6 +380,7 @@
                     </TopBar>
                 </ext:Panel>
                 
+                
                 <ext:Panel runat="server" Title="Customers" Icon="User" Width="50">
                     <TopBar>
                         <ext:Toolbar runat="server">
@@ -286,59 +390,23 @@
                                         <ext:Button 
                                             runat="server" 
                                             Text="Paste" 
-                                            IconCls="add32" 
-                                            Scale="Large" 
                                             IconAlign="Top"
+                                            Icon="Application" 
+                                            Height="100"
+                                           
+                                            Width="100"
                                             Cls="x-btn-as-arrow" 
-                                            RowSpan="3"
                                             />
                                         <ext:SplitButton 
                                             runat="server" 
                                             Text="Menu Button" 
                                             IconCls="add32" 
                                             IconAlign="Top"
-                                            ArrowAlign="Bottom" 
-                                            Scale="Large"
+                                            Icon="User"
+                                            Height="100"
+                                           
+                                            Width="100"
                                             RowSpan="3">
-                                            <Menu>
-                                                <ext:Menu runat="server">
-                                                    <Items>
-                                                        <ext:MenuItem runat="server" Text="Menu Button 1" />
-                                                    </Items>
-                                                </ext:Menu>
-                                            </Menu>
-                                        </ext:SplitButton>
-                                        <ext:SplitButton runat="server" Text="Cut" IconCls="add16">
-                                            <Menu>
-                                                <ext:Menu runat="server">
-                                                    <Items>
-                                                        <ext:MenuItem runat="server" Text="Cut Menu Item" />
-                                                    </Items>
-                                                </ext:Menu>
-                                            </Menu>
-                                        </ext:SplitButton>
-                                    </Items>
-                                </ext:ButtonGroup>
-                                
-                                <ext:ButtonGroup runat="server" Title="Other Actions" Columns="3">
-                                    <Items>
-                                        <ext:Button 
-                                            runat="server" 
-                                            Text="Paste" 
-                                            IconCls="add32" 
-                                            Scale="Large" 
-                                            IconAlign="Top"
-                                            RowSpan="3"
-                                            Cls="x-btn-as-arrow" 
-                                            />
-                                        <ext:SplitButton 
-                                            runat="server" 
-                                            Text="Menu Button" 
-                                            IconCls="add32" 
-                                            IconAlign="Top"
-                                            RowSpan="3"
-                                            ArrowAlign="Bottom" 
-                                            Scale="Large">
                                             <Menu>
                                                 <ext:Menu runat="server">
                                                     <Items>
