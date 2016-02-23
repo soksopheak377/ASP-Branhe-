@@ -34,3 +34,12 @@
     {
         border-bottom:2px solid #ff6600;
     }
+#txtsearch
+    {
+        display:inline-block;
+        margin-left:50px;
+    }
+ #mnpanel1
+    {
+        top:0px !important;
+    }

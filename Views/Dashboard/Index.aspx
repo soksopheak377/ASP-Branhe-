@@ -44,6 +44,9 @@
     {
         this.storedatgride.DataSource = this.Jobs;
         this.storedatgride.DataBind();
+
+        this.storedata.DataSource = this.Jobs1;
+        this.storedata.DataBind();
     }
     
     private List<Job> Jobs
@@ -69,6 +72,47 @@
     public class Job
     {
         public Job(int id, string name, DateTime start, DateTime end, bool completed)
+        {
+            this.ID = id;
+            this.Name = name;
+            this.Start = start;
+            this.End = end;
+            this.Completed = completed;
+        }
+
+        public int ID { get; set; }
+        public string Name { get; set; }
+        public DateTime Start { get; set; }
+        public DateTime End { get; set; }
+        public bool Completed { get; set; }
+    }
+</script>
+
+
+<script runat="server">    
+    private List<Job1> Jobs1
+    {
+        get
+        {
+            List<Job1> jobs1 = new List<Job1>();
+
+            for (int i = 1; i <= 1000; i++)
+            {
+                jobs1.Add(new Job1(
+                            i, 
+                            "Xzondev" + i.ToString(), 
+                            DateTime.Today.AddDays(i), 
+                            DateTime.Today.AddDays(i + i), 
+                            (i%3 == 0)));
+            }
+
+            return jobs1;
+        }
+    }
+
+    public class Job1
+    {
+        public Job1(int id, string name, DateTime start, DateTime end, bool completed)
         {
             this.ID = id;
             this.Name = name;
@@ -237,29 +281,25 @@
                     </TopBar>
 
                     <Items>
-                        <ext:Button ID="btn_add" runat="server" Icon="Add">
-                            <DirectEvents>
+                        <ext:Button ID="btn_add" runat="server" Icon="Add" Text="Add New">
+                            <%--<DirectEvents>
                                 <Click OnEvent="UpdateTimeStamp">
                                     <Confirmation ConfirmRequest="true"  Title="Title" Message="Sample Confirmation Message..."/>
                                 </Click>
-                            </DirectEvents>
+                            </DirectEvents>--%>
+
+                            <Listeners>
+                                <Click Handler="#{frmaddnew}.getForm().reset();#{win_frm_addnew}.show()"/>
+                            </Listeners>
                         </ext:Button>
-                    </Items>
-                    <Items>
-                       <%-- <ext:TextField ID="TextField1" 
-                                runat="server" 
-                                FieldLabel="Label" 
-                                iconCls='refreshIconCls'
-                                LabelStyle="color:blue;" 
-                                LabelSeparator="-" />--%>
-                                <ext:ComboBox ID="ComboBox1" 
+
+                        <ext:ComboBox ID="txtsearch" 
                                     runat="server" 
                                     DisplayField="Common" 
                                     ValueField="Common"
                                     TypeAhead="false"
-                                    Width="570"
                                     PageSize="10"
-                                    Region="East"
+                                    Region="North"
                                     HideBaseTrigger="true"
                                     MinChars="0"
                                     TriggerAction="Query">
@@ -320,13 +360,31 @@
                                     DataIndex="End"
                                     Format="yyyy-MM-dd"
                                     />
-                                <ext:Column ID="Column3" runat="server" 
+                                <%--<ext:Column ID="Column3" runat="server" 
                                     Text="Completed" 
                                     Width="80" 
                                     Sortable="true" 
                                     DataIndex="Completed">
-                                   <%-- <Renderer Handler="return (value) ? 'Yes':'No';" />--%>
-                                </ext:Column>
+                                    <Commands>
+                                        <ext:GridCommand Icon="Pencil" ToolTip-Text="Edit" CommandName="edit" />
+                                    </Commands>
+                                    <Renderer Handler="return (value) ? 'Yes':'No';" />
+                                </ext:Column>--%>
+                                <ext:CommandColumn  ID="Column3" runat="server" Border="false" Width="100">
+                                    <Commands>
+                                        <ext:GridCommand Icon="Pencil" ToolTip-Text="Edit" CommandName="Edit" />
+                                    </Commands>
+                                    <Listeners>
+                                        <Command Handler="#{frmaddnew}.getForm().reset();#{win_frm_addnew}.show()" />
+                                    </Listeners>
+                                    
+                                    <Commands>
+                                        <ext:GridCommand Icon="ApplicationDelete" ToolTip-Text="Delete" />
+                                    </Commands>
+                                    <Listeners>
+                                        <Command Handler="#{frmaddnew}.getForm().reset();#{win_frm_addnew}.show()" />
+                                    </Listeners>
+                                </ext:CommandColumn>
                             </Columns>
                           </ColumnModel>
                           <View>
@@ -379,44 +437,157 @@
                         </ext:Toolbar>
                     </TopBar>
                 </ext:Panel>
+                <%-- load form add new--%>
+                <ext:Window ID="win_frm_addnew" runat="server" Icon="Add" Title="Create New User" Width="500" Height="250" Hidden="true" Resizable="false" Modal="true" Collapsible="true" Closable="true">
+                    <Items>
+                        <ext:FormPanel runat="server" ID="frmaddnew" BodyStyle="background:transparent" Method="POST" Layout="FormLayout" padding="10" border="false">
+                            <Items>
+                                <ext:TextField runat="server" ID="vendor_id" Name="vender_id" Hidden="true"/>
+                                <ext:TextField runat="server" ID="vendor_name" Name="vender_name" AllowBlank="false" FieldLabel="Vendor Name" IndicatorText="*" IndicatorCls="indicator-color" LabelSeparator=""/>
+                                <ext:TextField runat="server" ID="phone" Name="phone" AllowBlank="false" FieldLabel="Phone" IndicatorText="*" IndicatorCls="indicator-color" LabelSeparator=""/>
+                                <ext:TextField runat="server" ID="email" Name="email" AllowBlank="false" FieldLabel="Email" IndicatorText="*" IndicatorCls="indicator-color" LabelSeparator=""/>
+                                <ext:TextArea runat="server" ID="address" Name="address" FieldLabel="Address" LabelSeparator=""/>
+                            </Items>
+                        </ext:FormPanel>
+                    </Items>     
+                    <Buttons> 
+                        <ext:Button runat="server" ID="btn_Save" Text="Save" Icon="Disk">
+                                <DirectEvents>
+                                    <Click Url="/InsurVendorProfile/save/" Type="Submit" Method="POST" CleanRequest="true" FormID="frm" IsUpload="true"
+                                            Before="if(!#{frm}.getForm().isValid()){
+                                                        Ext.Msg.alert('Missing Data','Please input all information!');
+                                                        return false;                                                   
+                                                    }else{
+                                                        return true;
+                                                    }"
+                                            Failure="Ext.Msg.show({title : 'Message', icon: Ext.MessageBox.ERROR, msg:  result.errorMessage, buttons:Ext.Msg.OK});"
+                                            Success="Ext.Msg.show({title : 'Message', icon: Ext.MessageBox.INFO, msg: result.result, buttons:Ext.Msg.OK});#{store}.load();#{win_vendor_profile}.close();">
+                                       </Click>
+                                </DirectEvents>
+                        </ext:Button>
+                        <ext:Button runat="server" ID="btn_cancel" Text="Cancel" Icon="Cancel">
+                            <Listeners>
+                                <Click Handler="#{win_frm_addnew}.close()" />
+                            </Listeners>
+                        </ext:Button>
+                    </Buttons>          
+                </ext:Window>     
                 
                 
+                           
                 <ext:Panel runat="server" Title="Customers" Icon="User" Width="50">
                     <TopBar>
                         <ext:Toolbar runat="server">
                             <Items>
-                                <ext:ButtonGroup runat="server" Title="Clipboard" Columns="3">
-                                    <Items>
-                                        <ext:Button 
-                                            runat="server" 
-                                            Text="Paste" 
-                                            IconAlign="Top"
-                                            Icon="Application" 
-                                            Height="100"
-                                           
-                                            Width="100"
-                                            Cls="x-btn-as-arrow" 
+                                <ext:MenuPanel 
+                                    ID="mnpanel1" 
+                                    runat="server" 
+                                    Width="200" 
+                                    top="0"
+                                    Region="West">
+                                    <Menu ID="Menu1" runat="server">
+                                        <Items>
+                                            <ext:MenuItem ID="MenuItem1" runat="server" Text="Order Item">
+                                                <Listeners>
+                                                    <Click Handler="addTab(#{TabPanel1}, 'idClt', 'http://www.ext.net', this);" />
+                                                </Listeners>
+                                            </ext:MenuItem>
+                            
+                                            <ext:MenuSeparator />
+                            
+                                            <ext:MenuItem ID="MenuItem2" runat="server" Text="View Detail">
+                                                <Listeners>
+                                                    <Click Handler="addTab(#{TabPanel1}, 'idGgl', 'http://forums.ext.net', this);" />
+                                                </Listeners>
+                                            </ext:MenuItem>
+                            
+                                            <ext:MenuSeparator />
+                            
+                                            <ext:MenuItem ID="MenuItem3" runat="server" Text="Check Out">
+                                                <Listeners>
+                                                    <Click Handler="addTab(#{TabPanel1}, 'idExt', 'http://www.sencha.com', this);" />
+                                                </Listeners>
+                                            </ext:MenuItem>
+                                        </Items>
+                                    </Menu>
+                                </ext:MenuPanel>
+                                <ext:TabPanel ID="TabPanel1" runat="server" Region="Center" />
+                            </Items>
+
+
+                            <Items>
+                                <ext:GridPanel runat="server" ID="loaddata_customer" Header="false" Border="false" ColumnLines="true"  Height="600" Width="1350">
+                                    <Store>
+                                        <ext:Store ID="storedata" runsat="server" PageSize="20">
+                                            <Model>
+                                                <ext:Model ID="load_customerdata" runat="server" IDProperty="ID">
+                                                    <Fields>
+                                                        <ext:ModelField Name="ID" />
+                                                        <ext:ModelField Name="Name" />
+                                                        <ext:ModelField Name="Start" Type="Date" />
+                                                        <ext:ModelField Name="End" Type="Date" />
+                                                        <ext:ModelField Name="Completed" Type="Boolean" />
+                                                    </Fields>
+                                                </ext:Model>
+                                            </Model>
+                                        </ext:Store>    
+                                    </Store>
+                                  <ColumnModel ID="ColumnModel1" runat="server">
+                                    <Columns>
+                                        <ext:Column ID="Column4" runat="server" 
+                                            Text="ID" 
+                                            Width="80" 
+                                            Sortable="true" 
+                                            DataIndex="ID" 
                                             />
-                                        <ext:SplitButton 
+                                        <ext:Column ID="Column5" runat="server" 
+                                            Text="Job Name" 
+                                            Sortable="true" 
+                                            DataIndex="Name"
+                                            Flex="1" 
+                                            />
+                                        <ext:DateColumn ID="DateColumn3" runat="server" 
+                                            Text="Start" 
+                                            Width="120" 
+                                            Sortable="true" 
+                                            DataIndex="Start"
+                                            Format="yyyy-MM-dd"
+                                            />
+                                        <ext:DateColumn ID="DateColumn4" runat="server" 
+                                            Text="End" 
+                                            Width="120" 
+                                            Sortable="true" 
+                                            DataIndex="End"
+                                            Format="yyyy-MM-dd"
+                                            />
+                                        <ext:CommandColumn  ID="CommandColumn1" runat="server" Border="false" Width="100">
+                                            <Commands>
+                                                <ext:GridCommand Icon="Pencil" ToolTip-Text="Edit" CommandName="Edit" />
+                                            </Commands>
+                                            <Listeners>
+                                                <Command Handler="#{frmaddnew}.getForm().reset();#{win_frm_addnew}.show()" />
+                                            </Listeners>
+                                    
+                                            <Commands>
+                                                <ext:GridCommand Icon="ApplicationDelete" ToolTip-Text="Delete" />
+                                            </Commands>
+                                            <Listeners>
+                                                <Command Handler="#{frmaddnew}.getForm().reset();#{win_frm_addnew}.show()" />
+                                            </Listeners>
+                                        </ext:CommandColumn>
+                                    </Columns>
+                                  </ColumnModel>
+                                  <View>
+                                        <ext:GridView ID="GridView2" runat="server" LoadMask="false" />
+                                  </View>
+                                  <BottomBar>
+                                        <ext:PagingToolbar ID="PagingToolbar2" 
                                             runat="server" 
-                                            Text="Menu Button" 
-                                            IconCls="add32" 
-                                            IconAlign="Top"
-                                            Icon="User"
-                                            Height="100"
-                                           
-                                            Width="100"
-                                            RowSpan="3">
-                                            <Menu>
-                                                <ext:Menu runat="server">
-                                                    <Items>
-                                                        <ext:MenuItem runat="server" Text="Menu Button 1" />
-                                                    </Items>
-                                                </ext:Menu>
-                                            </Menu>
-                                        </ext:SplitButton>
-                                    </Items>
-                                </ext:ButtonGroup>
+                                            DisplayInfo="true"
+                                            DisplayMsg="Displaying Jobs1 {0} - {1} of {2}"
+                                            />
+                                    </BottomBar>
+                                </ext:GridPanel>
                             </Items>
                         </ext:Toolbar>
                     </TopBar>

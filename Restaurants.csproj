@@ -178,6 +178,7 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\DashboardController.cs" />
     <Compile Include="Controllers\ExtNetController.cs" />
+    <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Filters\InitializeSimpleMembershipAttribute.cs" />
     <Compile Include="Global.asax.cs">
@@ -185,6 +186,7 @@
     </Compile>
     <Compile Include="Models\AccountModels.cs" />
     <Compile Include="Models\ExtNetModel.cs" />
+    <Compile Include="Models\Login_Model.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Views\Shared\Thems.Master.cs">
       <DependentUpon>Thems.Master</DependentUpon>
@@ -285,7 +287,16 @@
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Scripts\npm.js" />
+    <Content Include="Views\css\bootstrap-theme.css" />
+    <Content Include="Views\css\bootstrap-theme.min.css" />
+    <Content Include="Views\css\bootstrap.css" />
+    <Content Include="Views\css\bootstrap.min.css" />
     <Content Include="Views\Dashboard\Index.aspx" />
+    <Content Include="Views\fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="Views\js\bootstrap.js" />
+    <Content Include="Views\js\bootstrap.min.js" />
+    <Content Include="Views\js\npm.js" />
+    <Content Include="Views\Login\Index.aspx" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -345,6 +356,12 @@
     <None Include="Style\fonts\glyphicons-halflings-regular.ttf" />
     <None Include="Style\fonts\glyphicons-halflings-regular.woff" />
     <None Include="Style\fonts\glyphicons-halflings-regular.woff2" />
+    <None Include="Views\css\bootstrap-theme.css.map" />
+    <None Include="Views\css\bootstrap.css.map" />
+    <None Include="Views\fonts\glyphicons-halflings-regular.eot" />
+    <None Include="Views\fonts\glyphicons-halflings-regular.ttf" />
+    <None Include="Views\fonts\glyphicons-halflings-regular.woff" />
+    <None Include="Views\fonts\glyphicons-halflings-regular.woff2" />
     <None Include="Web.config.install.xdt" />
     <None Include="Web.config.uninstall.xdt" />
   </ItemGroup>
