@@ -176,6 +176,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\CountryController.cs" />
     <Compile Include="Controllers\DashboardController.cs" />
     <Compile Include="Controllers\ExtNetController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
@@ -287,6 +288,7 @@
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Scripts\npm.js" />
+    <Content Include="Views\Country\Index.aspx" />
     <Content Include="Views\css\bootstrap-theme.css" />
     <Content Include="Views\css\bootstrap-theme.min.css" />
     <Content Include="Views\css\bootstrap.css" />

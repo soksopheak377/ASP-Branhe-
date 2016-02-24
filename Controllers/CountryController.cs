@@ -9,9 +9,8 @@ using Restaurants.Models;
 
 namespace Restaurants.Controllers
 {
-    public class LoginController : Controller
+    public class CountryController : Controller
     {
-            LoginModel lgmodel = new LoginModel();
             
         public ActionResult Index()
         {

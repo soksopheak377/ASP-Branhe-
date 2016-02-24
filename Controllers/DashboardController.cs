@@ -11,18 +11,26 @@ namespace Restaurants.Controllers
         //
         // GET: /Dashboard/
         public static string username="dara";
-        public static string pass_word = "12345";
+        public static string password = "12345";
         public ActionResult Index()
         {
             return View();
         }
-
-        public ActionResult Login(string user_name, string password)
+        public ActionResult Login(FormCollection frm)
         {
-            if (user_name == username && password == pass_word)
+            string result = "";
+            string user = frm["user"].ToString();
+            string pwd = frm["pwd"].ToString();
+            if (username == user && pwd == password)
             {
                 return View();
             }
+            else
+            {
+                result = "Faild";
+            }
+            return this.RedirectToAction("Index", "Dashboard");
+            
         }
     }
 }

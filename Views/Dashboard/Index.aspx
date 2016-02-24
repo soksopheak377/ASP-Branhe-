@@ -128,96 +128,35 @@
         public bool Completed { get; set; }
     }
 </script>
+<script runat="server">
+    public static string TEST_HTML_1 = @"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed egestas gravida nibh, quis porttitor felis  
+                    venenatis id. Nam sodales mollis quam eget venenatis. Aliquam metus lorem, tincidunt ut egestas imperdiet, convallis  
+                    lacinia tortor. Mauris accumsan, nisl et sodales tristique, massa dui placerat erat, at venenatis tortor libero nec  
+                    tortor. Pellentesque quis elit ac dolor commodo tincidunt. Curabitur lorem eros, tincidunt quis viverra id, lacinia  
+                    sed nisl. Quisque viverra ante eu nisl consectetur hendrerit.";
+
+    public static string TEST_HTML_2 = @"<b>This tab is scrollable.</b><br /><br /> 
+                    Aenean sit amet quam ipsum. Nam aliquet ullamcorper lorem, vel commodo neque auctor quis. Vivamus ac purus in  
+                    tortor tempor viverra eget a magna. Nunc accumsan dolor porta mauris consequat nec mollis felis mattis. Nunc ligula nisl,  
+                    tempor ut pellentesque et, viverra eget tellus. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus sodales  
+                    rhoncus massa, sed lobortis risus euismod at. Suspendisse dictum, lectus vitae aliquam egestas, quam diam consequat augue,  
+                    non porta odio ante a dui. Vivamus lacus mi, ultrices sed feugiat elementum, ultrices et lectus. Donec aliquet hendrerit magna,  
+                    in venenatis ante faucibus ut. Duis non neque magna. Quisque iaculis luctus nibh, id pellentesque lorem egestas non. Phasellus  
+                    id risus eget felis auctor scelerisque. Fusce porttitor tortor eget magna pretium viverra. Sed tempor vulputate felis aliquam  
+                    scelerisque. Quisque eget libero non lectus tempus varius eu a tortor. 
+                    <br /><br /> 
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed egestas gravida nibh, quis porttitor felis  
+                    venenatis id. Nam sodales mollis quam eget venenatis. Aliquam metus lorem, tincidunt ut egestas imperdiet, convallis  
+                    lacinia tortor. Mauris accumsan, nisl et sodales tristique, massa dui placerat erat, at venenatis tortor libero nec  
+                    tortor. Pellentesque quis elit ac dolor commodo tincidunt. Curabitur lorem eros, tincidunt quis viverra id, lacinia  
+                    sed nisl. Quisque viverra ante eu nisl consectetur hendrerit.";
+</script>
+
+
+
 </head>
 <body>
-    <%--<ext:ResourceManager ID="ResourceManager1" runat="server"/>
-    <ext:Viewport ID="Viewport1" runat="server" Layout="FitLayout">
-        <Items>
-            <ext:GridPanel ID="GridPanel1" runat="server" ForceFit="true" Border="false">
-                <Store>
-                    <ext:Store ID="store" runat="server" AutoLoad="false">
-                        <Model>
-                            <ext:Model ID="Model1" runat="server">
-                                <Fields>
-                                    <ext:ModelField Name="cat_id" />
-                                    <ext:ModelField Name="cat_name" />
-                                </Fields>
-                            </ext:Model>
-                        </Model>
-                         <Parameters>
-                            <ext:StoreParameter Name="search" Value="#{txt_search}.getValue()" Mode="Raw"/>
-                        </Parameters>
-                    </ext:Store>
-                </Store>
-                 <TopBar>
-                    <ext:Toolbar ID="Toolbar1" runat="server">
-                        <Items>
-                            <ext:Button ID="btn_New" Text="Add New" runat="server" Icon="Add">
-                                <Listeners>
-                                    <Click Handler="#{frm}.getForm().reset();#{window}.show()" />
-                                </Listeners>
-                            </ext:Button>    
-                            <ext:ToolbarFill ID="ToolbarFill1" runat="server" /> 
-                                      
-                        </Items>
-                    </ext:Toolbar>
-                </TopBar>
-                <ColumnModel ID="ColumnModel1" runat="server">
-                    <Columns>
-                        <ext:RowNumbererColumn ID="col_no" runat="server" Text="Nº" MaxWidth="50"/>
-                        <ext:Column ID="col_cat_name" runat="server" Text="Category Name" DataIndex="cat_name"/>
-                        <ext:CommandColumn ID="CommandColumn3" runat="server" Border="false" MaxWidth="50">
-                            <Commands>
-                                <ext:GridCommand Icon="Pencil" ToolTip-Text="Edit" CommandName="edit" />
-                            </Commands>
-                            <Listeners>
-                                <Command Handler="#{window}.show(); #{frm}.getForm().loadRecord(record)"/>                                                               
-                            </Listeners>
-                        </ext:CommandColumn> 
-                    </Columns>
-                </ColumnModel>
-                <BottomBar>
-                    <ext:PagingToolbar ID="PagingToolbar7" runat="server"></ext:PagingToolbar>
-                </BottomBar>
-            </ext:GridPanel>
-        </Items>
-    </ext:Viewport>
-   <ext:Window runat="server" ID="window" Icon="Application" Title="Insurance Category" Width="400" Height="130" Collapsible="true" Modal="true" Hidden="true" Resizable="false" Closable="true">
-        <Items>
-            <ext:FormPanel runat="server" Method="POST" Layout="FormLayout" Padding="10" Border="false" BodyStyle="background:transparent" ID="frm">
-                <Items>
-                    <ext:TextField runat="server" ID="cat_id" Name="cat_id" Hidden="true"/>
-                    <ext:TextField runat="server" ID="cat_name" Name="cat_name" AllowBlank="false" FieldLabel="Category Name" IndicatorText="*" IndicatorCls="indicator-color" LabelSeparator=""/>
-                    <ext:TextField runat="server" ID="TextField1" Name="cat_name" AllowBlank="false" FieldLabel="Category Name" IndicatorText="*" IndicatorCls="indicator-color" LabelSeparator=""/>
-                </Items>
-            </ext:FormPanel>
-        </Items>
-        <Buttons> 
-            <ext:Button runat="server" ID="btn_Save" Text="Save" Icon="Disk">
-                    <DirectEvents>
-                        <Click Url="/InsuranceCategory/save/" Type="Submit" Method="POST" CleanRequest="true" FormID="frm" IsUpload="true"
-                                Before="if(!#{frm}.getForm().isValid()){
-                                            Ext.Msg.alert('Missing Data','Please input all information!');
-                                            return false;                                                   
-                                        }else{
-                                            return true;
-                                        }"
-                                Failure="Ext.Msg.show({title : 'Message', icon: Ext.MessageBox.ERROR, msg:  result.errorMessage, buttons:Ext.Msg.OK});"
-                                Success="Ext.Msg.show({title : 'Message', icon: Ext.MessageBox.INFO, msg: result.result, buttons:Ext.Msg.OK});#{store}.load();#{window}.close();">
-                           </Click>
-                    </DirectEvents>
-            </ext:Button>
-            <ext:Button runat="server" ID="btn_cancel" Text="Cancel" Icon="Cancel">
-                <Listeners>
-                    <Click Handler="#{window}.close()" />
-                </Listeners>
-            </ext:Button>
-        </Buttons>
-    </ext:Window>
---%>
-
-
-    <form id="Form1" runat="server">
+     <form id="Form1" runat="server">
         <ext:ResourceManager ID="ResourceManager2" runat="server" />
          <ext:TabPanel runat="server" Height="900" Width="1580" Top="80">
             <Items>
@@ -379,10 +318,10 @@
                                     </Listeners>
                                     
                                     <Commands>
-                                        <ext:GridCommand Icon="ApplicationDelete" ToolTip-Text="Delete" />
+                                        <ext:GridCommand Icon="ApplicationDelete" ToolTip-Text="Delete" CommandName="Delete" />
                                     </Commands>
                                     <Listeners>
-                                        <Command Handler="#{frmaddnew}.getForm().reset();#{win_frm_addnew}.show()" />
+                                        <Command Handler="#{frmdelete}.getForm().reset();#{win_delete}.show()" />
                                     </Listeners>
                                 </ext:CommandColumn>
                             </Columns>
@@ -400,43 +339,194 @@
                         </ext:GridPanel>
                     </Items>
                 </ext:Panel>
-                
-                <ext:Panel runat="server" Title="Products" class="icon-customer" Icon="Book">
+                <%--load page prosduct --%>
+                <ext:Panel runat="server" Title="Country" class="icon-customer" Icon="Book">
                     <TopBar>
                         <ext:Toolbar runat="server">
                             <Items>
-                                <ext:ButtonGroup runat="server" Title="All Products"  Columns="3">
+                                <ext:ButtonGroup runat="server" Title="All Country"  Columns="3">
                                     <Items>
-                                        <ext:Button runat="server" Text="Paste" IconCls="add32" IconAlign="Top" Height="100" Width="100" Icon="User" RowSpan="3">
-                                            <DirectEvents>
-                                                <Click OnEvent="UpdateTimeStamp">
-                                                    <Confirmation ConfirmRequest="true" Title="Title" Message="Sample Confirmation Message..." />
-                                                </Click>
-                                            </DirectEvents>
-                                        </ext:Button>
-                                        <ext:SplitButton 
+                                        <%--<ext:TabPanel ID="TabPanel2" 
                                             runat="server" 
-                                            Text="Menu Button" 
-                                            IconCls="add32" 
-                                            IconAlign="Top"
-                                            Icon="Book"
-                                            Height="100"
-                                            Width="100"
-                                            RowSpan="3">
-                                            <Menu>
-                                                <ext:Menu runat="server">
-                                                    <Items>
-                                                        <ext:MenuItem runat="server" Text="Menu Button 1" />
-                                                    </Items>
-                                                </ext:Menu>
+                                            Width="1560"
+                                            Height="600"
+                                            Margins="0 0 20 0">
+                                            <Defaults>
+                                                <ext:Parameter Name="bodyPadding" Value="10" Mode="Raw" />
+                                                <ext:Parameter Name="autoScroll" Value="true" Mode="Raw" />
+                                            </Defaults>
+                                            <Items>
+                                                <ext:Panel ID="Panel1" 
+                                                    runat="server" 
+                                                    Title="Active Tab" 
+                                                    Html="<%# TEST_HTML_1  %>" 
+                                                    AutoDataBind="true" />
+
+                                                <ext:Panel ID="Panel2"
+                                                    runat="server" 
+                                                    Title="Inactive Tab" 
+                                                    Html="<%# TEST_HTML_2  %>" 
+                                                    AutoDataBind="true" />
+
+                                                <ext:Panel ID="Panel3" runat="server" Title="Disabled Tab" Disabled="false" />
+                                            </Items>
+                                        </ext:TabPanel>--%>
+
+                                        <ext:MenuPanel 
+                                            ID="MenuPanel1" 
+                                            runat="server" 
+                                            Width="150" 
+                                            Region="West">
+                                            <Menu ID="Menu2" runat="server">
+                                                <Items>
+                                                    <ext:MenuItem ID="MenuItem4" runat="server" Text="Cambodia" Icon="FlagKh">
+                                                        <Listeners>
+                                                            <Click Handler="addTab(#{TabPanel1}, 'idClt', 'http://www.ext.net', this);" />
+                                                        </Listeners>
+                                                    </ext:MenuItem>
+                            
+                                                    <ext:MenuSeparator />
+                            
+                                                    <ext:MenuItem ID="MenuItem5" runat="server" Text="Thailand" Icon="FlagTh">
+                                                        <Listeners>
+                                                            <Click Handler="addTab(#{TabPanel1}, 'idGgl', 'http://forums.ext.net', this);" />
+                                                        </Listeners>
+                                                    </ext:MenuItem>
+                            
+                                                    <ext:MenuSeparator />
+                            
+                                                    <ext:MenuItem ID="MenuItem9" runat="server" Text="China" Icon="FlagCh">
+                                                        <Listeners>
+                                                            <Click Handler="addTab(#{TabPanel1}, 'idExt', 'http://www.sencha.com', this);" />
+                                                        </Listeners>
+                                                    </ext:MenuItem>
+                            
+                                                    <ext:MenuSeparator />
+                            
+                                                    <ext:MenuItem ID="MenuItem10" runat="server" Text="Laos" Icon="FlagLa">
+                                                        <Listeners>
+                                                            <Click Handler="addTab(#{TabPanel1}, 'idExt', 'http://www.sencha.com', this);" />
+                                                        </Listeners>
+                                                    </ext:MenuItem>
+                            
+                                                    <ext:MenuSeparator />
+                            
+                                                    <ext:MenuItem ID="MenuItem11" runat="server" Text="Japan" Icon="FlagJp">
+                                                        <Listeners>
+                                                            <Click Handler="addTab(#{TabPanel1}, 'idExt', 'http://www.sencha.com', this);" />
+                                                        </Listeners>
+                                                    </ext:MenuItem>
+                            
+                                                    <ext:MenuSeparator />
+                            
+                                                    <ext:MenuItem ID="MenuItem12" runat="server" Text="Korea" Icon="FlagKr">
+                                                        <Listeners>
+                                                            <Click Handler="addTab(#{TabPanel1}, 'idExt', 'http://www.sencha.com', this);" />
+                                                        </Listeners>
+                                                    </ext:MenuItem>
+                            
+                                                    <ext:MenuSeparator />
+                            
+                                                    <ext:MenuItem ID="MenuItem13" runat="server" Text="Veitnam" Icon="FlagVn">
+                                                        <Listeners>
+                                                            <Click Handler="addTab(#{TabPanel1}, 'idExt', 'http://www.sencha.com', this);" />
+                                                        </Listeners>
+                                                    </ext:MenuItem>
+                            
+                                                    <ext:MenuSeparator />
+                            
+                                                    <ext:MenuItem ID="MenuItem14" runat="server" Text="English" Icon="FlagEngland">
+                                                        <Listeners>
+                                                            <Click Handler="addTab(#{TabPanel1}, 'idExt', 'http://www.sencha.com', this);" />
+                                                        </Listeners>
+                                                    </ext:MenuItem>
+                            
+                                                    <ext:MenuSeparator />
+                            
+                                                    <ext:MenuItem ID="MenuItem15" runat="server" Text="UAS" Icon="FlagUs">
+                                                        <Listeners>
+                                                            <Click Handler="addTab(#{TabPanel1}, 'idExt', 'http://www.sencha.com', this);" />
+                                                        </Listeners>
+                                                    </ext:MenuItem>
+                            
+                                                    <ext:MenuSeparator />
+                            
+                                                    <ext:MenuItem ID="MenuItem16" runat="server" Text="India" Icon="FlagIn">
+                                                        <Listeners>
+                                                            <Click Handler="addTab(#{TabPanel1}, 'idExt', 'http://www.sencha.com', this);" />
+                                                        </Listeners>
+                                                    </ext:MenuItem>
+                            
+                                                    <ext:MenuSeparator />
+                            
+                                                    <ext:MenuItem ID="MenuItem17" runat="server" Text="Malayzy" Icon="FlagMl">
+                                                        <Listeners>
+                                                            <Click Handler="addTab(#{TabPanel1}, 'idExt', 'http://www.sencha.com', this);" />
+                                                        </Listeners>
+                                                    </ext:MenuItem>
+                                                </Items>
                                             </Menu>
-                                        </ext:SplitButton>
+                                        </ext:MenuPanel>
+                                        <ext:TabPanel ID="TabPanel2" runat="server" Region="Center" />
+                                        <%--<ext:Window ID="Window1" 
+                                            runat="server" 
+                                            Title="Collapsed Region Image" 
+                                            Icon="Application"
+                                            Width="1550" 
+                                            Height="600"
+                                            Border="true"
+                                            Closable="true"
+                                            X="0"
+                                            Y="0"
+                                            Plain="false"
+                                            Layout="BorderLayout">
+                                            <Items>
+                                                <ext:Panel 
+                                                    ID="WestPanel"
+                                                    runat="server"
+                                                    Region="West"
+                                                    Collapsible="true" 
+                                                    MinWidth="175" 
+                                                    Split="true"                             
+                                                    Width="175" 
+                                                    Title="Navigation" 
+                                                    Collapsed="true"
+                                                    BodyPadding="5"
+                                                    Html="Collapse Panel to see image.">
+                                                    <Listeners>
+                                                        <AfterRender Handler="this.setTitle('');" />
+                                                        <BeforeCollapse Handler="this.setTitle('');" />
+                                                        <BeforeExpand Handler="this.setTitle(this.initialConfig.title);" />
+                                                    </Listeners>                
+                                                </ext:Panel>
+                                                <ext:Panel ID="Panel1" runat="server" Region="Center" Title="Center region" />
+                                                <ext:Panel 
+                                                    ID="SouthPanel"
+                                                    runat="server"
+                                                    Region="South"
+                                                    Collapsible="true" 
+                                                    MinHeight="100" 
+                                                    Split="true"                            
+                                                    Height="100" 
+                                                    Title="Footer"
+                                                    Collapsed="true">
+                                                    <Listeners>
+                                                        <AfterRender Handler="this.setTitle('');" />
+                                                        <BeforeCollapse Handler="this.setTitle('');" />
+                                                        <BeforeExpand Handler="this.setTitle(this.initialConfig.title);" />
+                                                    </Listeners>   
+                                                 </ext:Panel>
+                                            </Items>
+                                        </ext:Window>--%>
                                     </Items>
                                 </ext:ButtonGroup>
                             </Items>
                         </ext:Toolbar>
                     </TopBar>
                 </ext:Panel>
+                <%-- end load page product--%>
+
+
                 <%-- load form add new--%>
                 <ext:Window ID="win_frm_addnew" runat="server" Icon="Add" Title="Create New User" Width="500" Height="250" Hidden="true" Resizable="false" Modal="true" Collapsible="true" Closable="true">
                     <Items>
@@ -473,6 +563,22 @@
                     </Buttons>          
                 </ext:Window>     
                 
+
+                
+                <ext:Window ID="win_delete" runat="server" Icon="Delete" Title="Create New User" Width="500" Height="100" Hidden="true" Resizable="false" Modal="true" Collapsible="true" Closable="true">
+                    <Items>
+                        <ext:FormPanel runat="server" ID="frmdelete" BodyStyle="background:transparent" Method="POST" Layout="FormLayout" padding="10" border="false">
+                            
+                        </ext:FormPanel>
+                    </Items>     
+                    <Buttons> 
+                        <ext:Button runat="server" ID="Button2" Text="Cancel" Icon="Cancel">
+                            <Listeners>
+                                <Click Handler="#{win_delete}.close()" />
+                            </Listeners>
+                        </ext:Button>
+                    </Buttons>          
+                </ext:Window> 
                 
                            
                 <ext:Panel runat="server" Title="Customers" Icon="User" Width="50">
@@ -487,7 +593,7 @@
                                     Region="West">
                                     <Menu ID="Menu1" runat="server">
                                         <Items>
-                                            <ext:MenuItem ID="MenuItem1" runat="server" Text="Order Item">
+                                            <ext:MenuItem ID="MenuItem1" runat="server" Text="Order Item" Icon="Bell">
                                                 <Listeners>
                                                     <Click Handler="addTab(#{TabPanel1}, 'idClt', 'http://www.ext.net', this);" />
                                                 </Listeners>
@@ -495,7 +601,7 @@
                             
                                             <ext:MenuSeparator />
                             
-                                            <ext:MenuItem ID="MenuItem2" runat="server" Text="View Detail">
+                                            <ext:MenuItem ID="MenuItem2" runat="server" Text="View Detail" Icon="Report">
                                                 <Listeners>
                                                     <Click Handler="addTab(#{TabPanel1}, 'idGgl', 'http://forums.ext.net', this);" />
                                                 </Listeners>
@@ -503,7 +609,7 @@
                             
                                             <ext:MenuSeparator />
                             
-                                            <ext:MenuItem ID="MenuItem3" runat="server" Text="Check Out">
+                                            <ext:MenuItem ID="MenuItem3" runat="server" Text="Check Out" Icon="Lock">
                                                 <Listeners>
                                                     <Click Handler="addTab(#{TabPanel1}, 'idExt', 'http://www.sencha.com', this);" />
                                                 </Listeners>
