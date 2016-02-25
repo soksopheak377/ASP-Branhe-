@@ -8,10 +8,6 @@
 <head id="Head1" runat="server">
     <meta name="viewport" content="width=device-width" />
     <title>Rastaurant | Home</title>
-    <link href="../../Style/css/bootstrap-theme.css" rel="stylesheet" type="text/css" />
-    <link href="../../Style/css/bootstrap-theme.min.css" rel="stylesheet" type="text/css" />
-    <link href="../../Style/css/bootstrap.css" rel="stylesheet" type="text/css" />
-    <link href="../../Style/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
     <link href="../../Style/css/style.css" rel="stylesheet" type="text/css" />
     <style>
         .add32 {
@@ -30,8 +26,6 @@
             background-image="../../Images/Amazon-Kindle-icon.png"
         }
     </style>
-    <script src="../../Scripts/bootstrap.js" type="text/javascript"></script>
-    <script src="../../Scripts/bootstrap.min.js" type="text/javascript"></script>
     <script runat="server">
     protected void UpdateTimeStamp(object sender, DirectEventArgs e)
     {
@@ -47,6 +41,9 @@
 
         this.storedata.DataSource = this.Jobs1;
         this.storedata.DataBind();
+
+        this.storeloaddatabase.DataSource = this.Data;
+        this.storeloaddatabase.DataBind();
     }
     
     private List<Job> Jobs
@@ -85,6 +82,46 @@
         public DateTime Start { get; set; }
         public DateTime End { get; set; }
         public bool Completed { get; set; }
+    }
+
+
+    private object[] Data
+    {
+        get
+        {
+            return new object[]
+            {
+                new object[] { "3m Co", 71.72, 0.02, 0.03, "9/1 12:00am" },
+                new object[] { "Alcoa Inc", 29.01, 0.42, 1.47, "9/1 12:00am" },
+                new object[] { "Altria Group Inc", 83.81, 0.28, 0.34, "9/1 12:00am" },
+                new object[] { "American Express Company", 52.55, 0.01, 0.02, "9/1 12:00am" },
+                new object[] { "American International Group, Inc.", 64.13, 0.31, 0.49, "9/1 12:00am" },
+                new object[] { "AT&T Inc.", 31.61, -0.48, -1.54, "9/1 12:00am" },
+                new object[] { "Boeing Co.", 75.43, 0.53, 0.71, "9/1 12:00am" },
+                new object[] { "Caterpillar Inc.", 67.27, 0.92, 1.39, "9/1 12:00am" },
+                new object[] { "Citigroup, Inc.", 49.37, 0.02, 0.04, "9/1 12:00am" },
+                new object[] { "E.I. du Pont de Nemours and Company", 40.48, 0.51, 1.28, "9/1 12:00am" },
+                new object[] { "Exxon Mobil Corp", 68.1, -0.43, -0.64, "9/1 12:00am" },
+                new object[] { "General Electric Company", 34.14, -0.08, -0.23, "9/1 12:00am" },
+                new object[] { "General Motors Corporation", 30.27, 1.09, 3.74, "9/1 12:00am" },
+                new object[] { "Hewlett-Packard Co.", 36.53, -0.03, -0.08, "9/1 12:00am" },
+                new object[] { "Honeywell Intl Inc", 38.77, 0.05, 0.13, "9/1 12:00am" },
+                new object[] { "Intel Corporation", 19.88, 0.31, 1.58, "9/1 12:00am" },
+                new object[] { "International Business Machines", 81.41, 0.44, 0.54, "9/1 12:00am" },
+                new object[] { "Johnson & Johnson", 64.72, 0.06, 0.09, "9/1 12:00am" },
+                new object[] { "JP Morgan & Chase & Co", 45.73, 0.07, 0.15, "9/1 12:00am" },
+                new object[] { "McDonald\"s Corporation", 36.76, 0.86, 2.40, "9/1 12:00am" },
+                new object[] { "Merck & Co., Inc.", 40.96, 0.41, 1.01, "9/1 12:00am" },
+                new object[] { "Microsoft Corporation", 25.84, 0.14, 0.54, "9/1 12:00am" },
+                new object[] { "Pfizer Inc", 27.96, 0.4, 1.45, "9/1 12:00am" },
+                new object[] { "The Coca-Cola Company", 45.07, 0.26, 0.58, "9/1 12:00am" },
+                new object[] { "The Home Depot, Inc.", 34.64, 0.35, 1.02, "9/1 12:00am" },
+                new object[] { "The Procter & Gamble Company", 61.91, 0.01, 0.02, "9/1 12:00am" },
+                new object[] { "United Technologies Corporation", 63.26, 0.55, 0.88, "9/1 12:00am" },
+                new object[] { "Verizon Communications", 35.57, 0.39, 1.11, "9/1 12:00am" },
+                new object[] { "Wal-Mart Stores, Inc.", 45.45, 0.73, 1.63, "9/1 12:00am" }
+            };
+        }
     }
 </script>
 
@@ -154,9 +191,43 @@
 
 
 
+
+<script>
+            var addTab = function (tabPanel, id, url, menuItem) {
+                var tab = tabPanel.getComponent(id);
+
+                if (!tab) {
+                    tab = tabPanel.add({ 
+                        id       : id, 
+                        title    : url, 
+                        closable : true,
+                        menuItem : menuItem,
+                        loader   : {
+                            url      : url,
+                            renderer : "frame",
+                            loadMask : {
+                                showMask : true,
+                                msg      : "Loading " + url + "..."
+                            }
+                        }
+                    });
+
+                    tab.on("activate", function (tab) {
+                        #{MenuPanel1}.setSelection(tab.menuItem);
+                    });
+                }
+            
+                tabPanel.setActiveTab(tab);
+            }
+        </script>
+    </ext:XScript>
+
+
+
 </head>
 <body>
-     <form id="Form1" runat="server">
+
+     <form id="Form1" runat="server" >
         <ext:ResourceManager ID="ResourceManager2" runat="server" />
          <ext:TabPanel runat="server" Height="900" Width="1580" Top="80">
             <Items>
@@ -200,15 +271,6 @@
                                                     </Items>
                                                     <Items>
                                                         <ext:MenuItem ID="Rices" runat="server" Text="Rices" />
-                                                    </Items>
-                                                    <Items>
-                                                        <ext:MenuItem ID="MenuItem6" runat="server" Text="Menu Button 1" />
-                                                    </Items>
-                                                    <Items>
-                                                        <ext:MenuItem ID="MenuItem7" runat="server" Text="Menu Button 1" />
-                                                    </Items>
-                                                    <Items>
-                                                        <ext:MenuItem ID="MenuItem8" runat="server" Text="Menu Button 1" />
                                                     </Items>
                                                 </ext:Menu>
                                             </Menu>
@@ -299,24 +361,17 @@
                                     DataIndex="End"
                                     Format="yyyy-MM-dd"
                                     />
-                                <%--<ext:Column ID="Column3" runat="server" 
-                                    Text="Completed" 
-                                    Width="80" 
-                                    Sortable="true" 
-                                    DataIndex="Completed">
-                                    <Commands>
-                                        <ext:GridCommand Icon="Pencil" ToolTip-Text="Edit" CommandName="edit" />
-                                    </Commands>
-                                    <Renderer Handler="return (value) ? 'Yes':'No';" />
-                                </ext:Column>--%>
-                                <ext:CommandColumn  ID="Column3" runat="server" Border="false" Width="100">
+                                <ext:CommandColumn  ID="Column3" runat="server" Border="false" Width="45"  Text="Edit">
+                                   
                                     <Commands>
                                         <ext:GridCommand Icon="Pencil" ToolTip-Text="Edit" CommandName="Edit" />
                                     </Commands>
                                     <Listeners>
                                         <Command Handler="#{frmaddnew}.getForm().reset();#{win_frm_addnew}.show()" />
                                     </Listeners>
-                                    
+
+                                </ext:CommandColumn>
+                                <ext:CommandColumn  ID="CommandColumn2" runat="server" Border="false" Width="50" Text="Delete">
                                     <Commands>
                                         <ext:GridCommand Icon="ApplicationDelete" ToolTip-Text="Delete" CommandName="Delete" />
                                     </Commands>
@@ -378,10 +433,10 @@
                                             Width="150" 
                                             Region="West">
                                             <Menu ID="Menu2" runat="server">
-                                                <Items>
+                                                <Items>                                                
                                                     <ext:MenuItem ID="MenuItem4" runat="server" Text="Cambodia" Icon="FlagKh">
                                                         <Listeners>
-                                                            <Click Handler="addTab(#{TabPanel1}, 'idClt', 'http://www.ext.net', this);" />
+                                                            <Click Handler="#{flagkh}.show();" />
                                                         </Listeners>
                                                     </ext:MenuItem>
                             
@@ -389,7 +444,7 @@
                             
                                                     <ext:MenuItem ID="MenuItem5" runat="server" Text="Thailand" Icon="FlagTh">
                                                         <Listeners>
-                                                            <Click Handler="addTab(#{TabPanel1}, 'idGgl', 'http://forums.ext.net', this);" />
+                                                            <Click Handler="#{flagthia}.show();" />
                                                         </Listeners>
                                                     </ext:MenuItem>
                             
@@ -397,7 +452,7 @@
                             
                                                     <ext:MenuItem ID="MenuItem9" runat="server" Text="China" Icon="FlagCh">
                                                         <Listeners>
-                                                            <Click Handler="addTab(#{TabPanel1}, 'idExt', 'http://www.sencha.com', this);" />
+                                                            <Click Handler="#{flagchina}.show();" />
                                                         </Listeners>
                                                     </ext:MenuItem>
                             
@@ -405,7 +460,7 @@
                             
                                                     <ext:MenuItem ID="MenuItem10" runat="server" Text="Laos" Icon="FlagLa">
                                                         <Listeners>
-                                                            <Click Handler="addTab(#{TabPanel1}, 'idExt', 'http://www.sencha.com', this);" />
+                                                            <Click Handler="#{flaglaos}.show();" />
                                                         </Listeners>
                                                     </ext:MenuItem>
                             
@@ -413,7 +468,7 @@
                             
                                                     <ext:MenuItem ID="MenuItem11" runat="server" Text="Japan" Icon="FlagJp">
                                                         <Listeners>
-                                                            <Click Handler="addTab(#{TabPanel1}, 'idExt', 'http://www.sencha.com', this);" />
+                                                            <Click Handler="#{flagjapan}.show();" />
                                                         </Listeners>
                                                     </ext:MenuItem>
                             
@@ -421,7 +476,7 @@
                             
                                                     <ext:MenuItem ID="MenuItem12" runat="server" Text="Korea" Icon="FlagKr">
                                                         <Listeners>
-                                                            <Click Handler="addTab(#{TabPanel1}, 'idExt', 'http://www.sencha.com', this);" />
+                                                            <Click Handler="#{flagKorea}.show();" />
                                                         </Listeners>
                                                     </ext:MenuItem>
                             
@@ -429,7 +484,7 @@
                             
                                                     <ext:MenuItem ID="MenuItem13" runat="server" Text="Veitnam" Icon="FlagVn">
                                                         <Listeners>
-                                                            <Click Handler="addTab(#{TabPanel1}, 'idExt', 'http://www.sencha.com', this);" />
+                                                            <Click Handler="#{flagvietnam}.show();" />
                                                         </Listeners>
                                                     </ext:MenuItem>
                             
@@ -437,7 +492,7 @@
                             
                                                     <ext:MenuItem ID="MenuItem14" runat="server" Text="English" Icon="FlagEngland">
                                                         <Listeners>
-                                                            <Click Handler="addTab(#{TabPanel1}, 'idExt', 'http://www.sencha.com', this);" />
+                                                            <Click Handler="#{flagenglish}.show();" />
                                                         </Listeners>
                                                     </ext:MenuItem>
                             
@@ -445,79 +500,173 @@
                             
                                                     <ext:MenuItem ID="MenuItem15" runat="server" Text="UAS" Icon="FlagUs">
                                                         <Listeners>
-                                                            <Click Handler="addTab(#{TabPanel1}, 'idExt', 'http://www.sencha.com', this);" />
+                                                            <Click Handler="#{flagusa}.show();" />
                                                         </Listeners>
                                                     </ext:MenuItem>
                             
                                                     <ext:MenuSeparator />
                             
                                                     <ext:MenuItem ID="MenuItem16" runat="server" Text="India" Icon="FlagIn">
+                                                        <%--<Listeners>
+                                                            <Click Handler="#{load_flag}.show();" />
+                                                        </Listeners>--%>
                                                         <Listeners>
-                                                            <Click Handler="addTab(#{TabPanel1}, 'idExt', 'http://www.sencha.com', this);" />
+                                                            <Click Handler="#{flagindia}.show();" />
                                                         </Listeners>
+                                                        <%--<DirectEvents>
+                                                            <Click OnEvent="UpdateTimeStamp">
+                                                                <Confirmation ConfirmRequest="true" Title="Title" Message="Sample Confirmation Message..." />
+                                                            </Click>
+                                                        </DirectEvents>--%>
                                                     </ext:MenuItem>
                             
                                                     <ext:MenuSeparator />
                             
                                                     <ext:MenuItem ID="MenuItem17" runat="server" Text="Malayzy" Icon="FlagMl">
                                                         <Listeners>
-                                                            <Click Handler="addTab(#{TabPanel1}, 'idExt', 'http://www.sencha.com', this);" />
+                                                            <Click Handler="#{flagmalazy}.show();" />
                                                         </Listeners>
                                                     </ext:MenuItem>
                                                 </Items>
                                             </Menu>
                                         </ext:MenuPanel>
                                         <ext:TabPanel ID="TabPanel2" runat="server" Region="Center" />
-                                        <%--<ext:Window ID="Window1" 
-                                            runat="server" 
-                                            Title="Collapsed Region Image" 
-                                            Icon="Application"
-                                            Width="1550" 
-                                            Height="600"
-                                            Border="true"
-                                            Closable="true"
-                                            X="0"
-                                            Y="0"
-                                            Plain="false"
-                                            Layout="BorderLayout">
+                                        
+                                        <ext:TabPanel ID="TabPanel3" runat="server" Width="1390">
                                             <Items>
-                                                <ext:Panel 
-                                                    ID="WestPanel"
-                                                    runat="server"
-                                                    Region="West"
-                                                    Collapsible="true" 
-                                                    MinWidth="175" 
-                                                    Split="true"                             
-                                                    Width="175" 
-                                                    Title="Navigation" 
-                                                    Collapsed="true"
-                                                    BodyPadding="5"
-                                                    Html="Collapse Panel to see image.">
-                                                    <Listeners>
-                                                        <AfterRender Handler="this.setTitle('');" />
-                                                        <BeforeCollapse Handler="this.setTitle('');" />
-                                                        <BeforeExpand Handler="this.setTitle(this.initialConfig.title);" />
-                                                    </Listeners>                
-                                                </ext:Panel>
-                                                <ext:Panel ID="Panel1" runat="server" Region="Center" Title="Center region" />
-                                                <ext:Panel 
-                                                    ID="SouthPanel"
-                                                    runat="server"
-                                                    Region="South"
-                                                    Collapsible="true" 
-                                                    MinHeight="100" 
-                                                    Split="true"                            
-                                                    Height="100" 
-                                                    Title="Footer"
-                                                    Collapsed="true">
-                                                    <Listeners>
-                                                        <AfterRender Handler="this.setTitle('');" />
-                                                        <BeforeCollapse Handler="this.setTitle('');" />
-                                                        <BeforeExpand Handler="this.setTitle(this.initialConfig.title);" />
-                                                    </Listeners>   
-                                                 </ext:Panel>
+                                                <ext:GridPanel runat="server" ID="GridPanel1" Icon="Database" Title="Load Database" Width="800" Height="400" ColumnLines="true">
+                                                    <Store>
+                                                        <ext:Store ID="storeloaddatabase" runat="server">
+                                                            <Model>
+                                                                <ext:Model ID="Model2" runat="server">
+                                                                    <Fields>
+                                                                        <ext:ModelField Name="company" />
+                                                                        <ext:ModelField Name="price" Type="Float" />
+                                                                        <ext:ModelField Name="change" Type="Float" />
+                                                                        <ext:ModelField Name="pctChange" Type="Float" />
+                                                                        <ext:ModelField Name="lastChange" Type="Date" DateFormat="M/d hh:mmtt" />
+                                                                    </Fields>
+                                                                </ext:Model>
+                                                            </Model>
+                                                        </ext:Store>
+                                                    </Store>
+                                               </ext:GridPanel>
                                             </Items>
-                                        </ext:Window>--%>
+                                            <Items>
+                                                <ext:Panel ID="flagkh" 
+                                                    runat="server" 
+                                                    Title="Short Text" 
+                                                    Hidden="true"
+                                                    BodyPadding="6">
+                                                    <Content>
+                                                       Khmer Tabpenel
+                                                    </Content>
+                                                </ext:Panel>
+
+                                                <%--load flag--%>
+                                                <ext:Panel ID="flagthia" 
+                                                    runat="server" 
+                                                    Title="Short Text"
+                                                    Header="false" 
+                                                    Hidden="true"
+                                                    BodyPadding="6">
+                                                    <Content>
+                                                       Thailand Tabpenel
+                                                    </Content>
+                                                </ext:Panel>
+                                                <ext:Panel ID="flagchina"
+                                                    runat="server" 
+                                                    Hidden="true"
+                                                    Title="Long Text" 
+                                                    BodyPadding="6">
+                                                    <Content>
+                                                        Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Sed metus nibh, sodales
+                                                        a, porta at, vulputate eget, dui. Pellentesque ut nisl. Maecenas tortor turpis,
+                                                        interdum non, sodales non, iaculis ac, lacus. Vestibulum auctor, tortor quis iaculis
+                                                        malesuada, libero lectus bibendum purus, sit amet tincidunt quam turpis vel lacus.
+                                                        In pellentesque nisl non sem. Suspendisse nunc sem, pretium eget, cursus a, fringilla
+                                                        vel, urna.<br />
+                                                        <br />
+                                                        Aliquam commodo ullamcorper erat. Nullam vel justo in neque porttitor laoreet. Aenean
+                                                        lacus dui, consequat eu, adipiscing eget, nonummy non, nisi. Morbi nunc est, dignissim
+                                                        non, ornare sed, luctus eu, massa. Vivamus eget quam. Vivamus tincidunt diam nec
+                                                        urna. Curabitur velit.
+                                                    </Content>
+                                                </ext:Panel>
+                                                <ext:Panel ID="flaglaos"
+                                                    runat="server" 
+                                                    Hidden="true"
+                                                    Title="Long Text" 
+                                                    BodyPadding="6">
+                                                    <Content>
+                                                        Laos country
+                                                    </Content>
+                                                </ext:Panel>
+                                                <ext:Panel ID="flagjapan"
+                                                    runat="server" 
+                                                    Hidden="true"
+                                                    Title="Long Text" 
+                                                    BodyPadding="6">
+                                                    <Content>
+                                                        Japan country
+                                                    </Content>
+                                                </ext:Panel>
+                                                <ext:Panel ID="flagKorea"
+                                                    runat="server" 
+                                                    Hidden="true"
+                                                    Title="Long Text" 
+                                                    BodyPadding="6">
+                                                    <Content>
+                                                        Korea country
+                                                    </Content>
+                                                </ext:Panel>
+                                                <ext:Panel ID="flagvietnam"
+                                                    runat="server" 
+                                                    Hidden="true"
+                                                    Title="Long Text" 
+                                                    BodyPadding="6">
+                                                    <Content>
+                                                        Vietnam country
+                                                    </Content>
+                                                </ext:Panel>
+                                                <ext:Panel ID="flagenglish"
+                                                    runat="server" 
+                                                    Hidden="true"
+                                                    Title="Long Text" 
+                                                    BodyPadding="6">
+                                                    <Content>
+                                                        English country
+                                                    </Content>
+                                                </ext:Panel>
+                                                <ext:Panel ID="flagusa"
+                                                    runat="server" 
+                                                    Hidden="true"
+                                                    Title="Long Text" 
+                                                    BodyPadding="6">
+                                                    <Content>
+                                                        USA country
+                                                    </Content>
+                                                </ext:Panel>
+                                                <ext:Panel ID="flagindia"
+                                                    runat="server" 
+                                                    Hidden="true"
+                                                    Title="Long Text" 
+                                                    BodyPadding="6">
+                                                    <Content>
+                                                        India country
+                                                    </Content>
+                                                </ext:Panel>
+                                                <ext:Panel ID="flagmalazy"
+                                                    runat="server" 
+                                                    Hidden="true"
+                                                    Title="Long Text" 
+                                                    BodyPadding="6">
+                                                    <Content>
+                                                        India country
+                                                    </Content>
+                                                </ext:Panel>
+                                            </Items>
+                                        </ext:TabPanel>
                                     </Items>
                                 </ext:ButtonGroup>
                             </Items>
@@ -564,6 +713,14 @@
                 </ext:Window>     
                 
 
+                <ext:Window ID="load_flag" runat="server" Icon="FlagId" Title="India Country" Resizable="false" Width="300" Height="150" Collapsed="true" Closable="true" Hidden="true" Modal="true">
+                    <Items>
+                        <ext:FormPanel runat="server" Icon="FlagId" ID="frmflagid" BodyStyle="background:transparent" Method="POST" Layout="FormLayout" Padding="10" border="false">
+                            
+                        </ext:FormPanel>
+                    </Items>
+                </ext:Window>
+
                 
                 <ext:Window ID="win_delete" runat="server" Icon="Delete" Title="Create New User" Width="500" Height="100" Hidden="true" Resizable="false" Modal="true" Collapsible="true" Closable="true">
                     <Items>
@@ -572,6 +729,11 @@
                         </ext:FormPanel>
                     </Items>     
                     <Buttons> 
+                    <ext:Button runat="server" ID="btn_confirm" Text="Confirm" Icon="Accept">
+                        <Listeners>
+                            <Click Handler="#{win_delete}.close()" />
+                        </Listeners>
+                    </ext:Button>
                         <ext:Button runat="server" ID="Button2" Text="Cancel" Icon="Cancel">
                             <Listeners>
                                 <Click Handler="#{win_delete}.close()" />
